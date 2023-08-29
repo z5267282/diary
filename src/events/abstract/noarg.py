@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from event import Event
+from events.abstract.event import Event
 
 class NoArg(Event):
     @abstractmethod
