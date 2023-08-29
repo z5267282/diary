@@ -15,3 +15,6 @@ class OneArg(Event):
         # the sole token should be added as a value
         parent[self.key] = tokens,
         return parent
+    
+    def append(self, old : list, entry : dict) -> None:
+        super().append(old, entry)
