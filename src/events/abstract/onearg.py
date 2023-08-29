@@ -17,4 +17,4 @@ class OneArg(Event):
         return parent
     
     def append(self, old : list, entry : dict) -> None:
-        super().append(old, entry)
+        old.append(entry)
