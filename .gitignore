@@ -1,2 +1,10 @@
+# python
 __pycache__
+
+# mac
 .DS_Store
+
+# pyinstaller
+*.spec
+build
+dist
