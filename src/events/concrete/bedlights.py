@@ -1,4 +1,4 @@
-from noarg import NoArg
+from events.abstract import NoArg
 
 class BedLights(NoArg):
     def __init__(self):
