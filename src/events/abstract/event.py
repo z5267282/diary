@@ -4,6 +4,8 @@ import json
 import os
 import sys
 
+from error import BAD_ARGS
+
 class Event(ABC):
     LOGS : str = "logs"
 
@@ -30,6 +32,7 @@ class Event(ABC):
             entry : dict = self.parse(tokens)
         except ValueError as error:
             print(error, file=sys.stderr)
+            sys.exit(BAD_ARGS)
             
         with open(self.get_filename(), "r") as f:
             old : list = json.load(f)
