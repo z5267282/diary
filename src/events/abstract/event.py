@@ -68,5 +68,5 @@ class Event(ABC):
         js = "{}.json".format(self.name.replace(" ", "-"))
         return os.path.join(Event.LOGS, js)
     
-    def get_usage(self):
+    def get_usage(self) -> str:
         return f"{self.get_shorthand()} : {self.name} {self.usage}"
