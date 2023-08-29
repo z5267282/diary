@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 import json
+import os
 import sys
-    
+
 class Event(ABC):
+    LOGS : str = "logs"
+
     @abstractmethod
     def __init__(self, name : str, num_args : int):
         """Note that subclasses must eventually call a concrete constructor"""
@@ -52,4 +55,5 @@ class Event(ABC):
     
     def get_filename(self) -> str:
         """Filenames should be hyphenated version with .json as a suffix"""
-        return "{}.json".format(self.name.replace(" ", "-"))
+        js = "{}.json".format(self.name.replace(" ", "-"))
+        return os.path.join(Event.LOGS, js)
