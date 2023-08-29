@@ -53,7 +53,6 @@ class Event(ABC):
                 self.name, self.num_args,
                 "" if self.num_args == 1 else "s"
             ))
-
         return tokens
     
     @abstractmethod
