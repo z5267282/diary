@@ -1,4 +1,4 @@
 #!/bin/zsh
 
 pyinstaller --onefile --paths src src/main.py \
-&& mv dist/main "$SCRIPTS/diary"
+&& cp dist/main "$SCRIPTS/diary"
