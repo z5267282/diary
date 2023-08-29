@@ -26,7 +26,7 @@ class Event(ABC):
             case 1:
                 return self.name[0] + self.name[-1]
             case _:
-                return " ".join(t[0] for t in tokens)
+                return "".join(t[0] for t in tokens)
 
     def dump(self, tokens : list[str]) -> None:
         try:
@@ -69,4 +69,4 @@ class Event(ABC):
         return os.path.join(Event.LOGS, js)
     
     def get_usage(self):
-        return f"usage : {self.name} {self.usage}"
+        return f"{self.get_shorthand()} : {self.name} {self.usage}"

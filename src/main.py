@@ -26,6 +26,7 @@ def main():
         print("\n".join(
             f"    {event.get_usage()}" for event in events
         ))
+        sys.exit(0)
 
     event : Event = mapping.get(command)
     if event is None:
