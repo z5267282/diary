@@ -47,7 +47,14 @@ class Event(ABC):
     
     @abstractmethod
     def tokenise(self, data : str) -> list[str]:
-        return data.split(" ", maxsplit=self.num_args - 1)
+        tokens : list[str] = data.split(" ", maxsplit=self.num_args - 1)
+        if len(tokens) != self.num_args:
+            raise ValueError("{} expects {} argument{}".format(
+                self.name, self.num_args,
+                "" if self.num_args == 1 else "s"
+            ))
+
+        return tokens
     
     @abstractmethod
     def append(self, old : list, entry : dict) -> None:
