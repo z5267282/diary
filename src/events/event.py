@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 import json
+import sys
     
 class Event(ABC):
     def __init__(self, name : str):
@@ -24,6 +25,8 @@ class Event(ABC):
 
     @abstractmethod
     def parse(self, data : str) -> dict:
+        """Parse raw input into an event in dictionary format.
+        Raise a ValueError if an error occurred"""
         today = datetime.now().strftime('%d/%m/%Y')
         return { "date" : today }
     
@@ -32,9 +35,14 @@ class Event(ABC):
         pass
     
     def dump(self, data : str) -> None:
+        try:
+            entry : dict = self.parse(data)
+        except ValueError as error:
+            print(error, file=sys.stderr)
+            sys.exit(1)
+            
         with open(self.get_filename(), "r") as f:
             old : list = json.load(f)
-            entry : dict = self.parse(data)
             self.append(old, entry)
         
         with open(self.get_filename(), "w") as f:
