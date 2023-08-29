@@ -7,7 +7,7 @@ import sys
 from error import BAD_ARGS
 
 class Event(ABC):
-    LOGS : str = "logs"
+    LOGS : str = os.path.expanduser("~/diary/logs")
 
     @abstractmethod
     def __init__(self, name : str, num_args : int):
