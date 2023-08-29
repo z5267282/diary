@@ -13,7 +13,8 @@ class OneArg(Event):
     def parse(self, tokens : list[str]) -> dict:
         parent : dict = super().parse(tokens)
         # the sole token should be added as a value
-        parent[self.key] = tokens,
+        value, = tokens
+        parent[self.key] = value
         return parent
     
     def append(self, old : list, entry : dict) -> None:
