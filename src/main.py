@@ -21,6 +21,12 @@ def main():
         sys.exit(NO_INPUT)
     
     command : str = args.pop(0)
+    if command == "--help":
+        print("these things can be logged")
+        print("\n".join(
+            f"    {event.get_usage()}" for event in events
+        ))
+
     event : Event = mapping.get(command)
     if event is None:
         print(f"invalid command - '{command}'")

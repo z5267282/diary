@@ -10,11 +10,12 @@ class Event(ABC):
     LOGS : str = os.path.expanduser("~/diary/logs")
 
     @abstractmethod
-    def __init__(self, name : str, num_args : int):
+    def __init__(self, name : str, num_args : int, usage : str):
         """Note that subclasses must eventually call a concrete constructor"""
         # the full name in lowercase with spacebars if needed
         self.name : str = name 
         self.num_args : int = num_args
+        self.usage : str = usage
     
     def get_shorthand(self) -> str:
         """Convert the full name into a shorthand.
@@ -66,3 +67,6 @@ class Event(ABC):
         """Filenames should be hyphenated version with .json as a suffix"""
         js = "{}.json".format(self.name.replace(" ", "-"))
         return os.path.join(Event.LOGS, js)
+    
+    def get_usage(self):
+        return f"usage : {self.name} {self.usage}"

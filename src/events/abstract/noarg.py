@@ -4,9 +4,9 @@ from events.abstract.event import Event
 
 class NoArg(Event):
     @abstractmethod
-    def __init__(self, name):
+    def __init__(self, name : str):
         """No arg events are to be run without arguments"""
-        super().__init__(name, 0)
+        super().__init__(name, 0, "<no args>")
     
     def append(self, old: list, entry: dict) -> None:
         """No arg events should only store their date"""
