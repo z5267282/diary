@@ -33,13 +33,18 @@ class Event(ABC):
         except ValueError as error:
             print(error, file=sys.stderr)
             sys.exit(BAD_ARGS)
-            
-        with open(self.get_filename(), "r") as f:
+
+        filename : str = self.get_filename()
+        if not os.path.exists(filename):
+            with open(filename, "w") as f:
+                json.dump([], f, indent=2)
+
+        with open(filename, "r+") as f:
             old : list = json.load(f)
             self.append(old, entry)
         
-        with open(self.get_filename(), "w") as f:
-            json.dump(old, f)
+        with open(filename, "w") as f:
+            json.dump(old, f, indent=2)
     
     @abstractmethod
     def parse(self, tokens : list[str]) -> dict:

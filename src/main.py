@@ -26,7 +26,7 @@ def main():
         print(f"invalid command - '{command}'")
         sys.exit(NO_COMMAND)
     
-    event.dump()
+    event.dump(args)
 
 if __name__ == "__main__":
     main()
