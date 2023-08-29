@@ -25,9 +25,9 @@ class Event(ABC):
             case _:
                 return " ".join(t[0] for t in tokens)
 
-    def dump(self, data : str) -> None:
+    def dump(self, tokens : list[str]) -> None:
         try:
-            entry : dict = self.parse(data)
+            entry : dict = self.parse(tokens)
         except ValueError as error:
             print(error, file=sys.stderr)
             
@@ -39,21 +39,16 @@ class Event(ABC):
             json.dump(old, f)
     
     @abstractmethod
-    def parse(self, data : str) -> dict:
+    def parse(self, tokens : list[str]) -> dict:
         """Parse raw input into an event in dictionary format.
         Raise a ValueError if an error occurred"""
-        today = datetime.now().strftime('%d/%m/%Y')
-        return { "date" : today }
-    
-    @abstractmethod
-    def tokenise(self, data : str) -> list[str]:
-        tokens : list[str] = data.split(" ", maxsplit=self.num_args - 1)
         if len(tokens) != self.num_args:
             raise ValueError("{} expects {} argument{}".format(
                 self.name, self.num_args,
                 "" if self.num_args == 1 else "s"
             ))
-        return tokens
+        today = datetime.now().strftime('%d/%m/%Y')
+        return { "date" : today }
     
     @abstractmethod
     def append(self, old : list, entry : dict) -> None:
