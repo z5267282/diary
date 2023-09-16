@@ -41,7 +41,7 @@ class Event(ABC):
             with open(filename, "w") as f:
                 json.dump([], f, indent=2)
 
-        with open(filename, "r+") as f:
+        with open(filename, "r") as f:
             old : list = json.load(f)
             self.append(old, entry)
         
