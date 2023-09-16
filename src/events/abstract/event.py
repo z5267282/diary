@@ -4,6 +4,7 @@ import json
 import os
 import sys
 
+from config import DATE_FORMAT
 from error import BAD_ARGS
 
 class Event(ABC):
@@ -56,7 +57,7 @@ class Event(ABC):
                 self.name, self.num_args,
                 "" if self.num_args == 1 else "s"
             ))
-        today = datetime.now().strftime('%d/%m/%Y')
+        today = datetime.now().strftime(DATE_FORMAT)
         return { "date" : today }
     
     @abstractmethod
