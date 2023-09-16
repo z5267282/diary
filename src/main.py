@@ -1,3 +1,4 @@
+from os.path import basename
 import sys
 
 from error import NO_INPUT, NO_COMMAND
@@ -25,9 +26,9 @@ def main():
     
     command : str = args.pop(0)
     if command == "--help":
-        display_help()
+        display_help(events)
         sys.exit(0)
-
+    
     event : Event = mapping.get(command)
     if event is None:
         print(f"invalid command - '{command}'")
@@ -41,6 +42,8 @@ def create_events():
     return no_arg + one_arg
 
 def display_help(events : list[Event]):
+    print(f"usage : {basename(sys.argv[0])} [ -[p]rev command ]")
+    print()
     print("these things can be logged")
     print("\n".join(
         f"    {event.get_usage()}" for event in events
