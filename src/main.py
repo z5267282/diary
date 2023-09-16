@@ -22,19 +22,29 @@ def main():
     args = sys.argv[1:]
     if not args:
         print("enter a command")
-        sys.exit(NO_INPUT)
+        return NO_INPUT
     
     command : str = args.pop(0)
-    if command == "--help":
-        display_help(events)
-        sys.exit(0)
+    match command:
+        case "--help":
+            display_help(events)
+            return 0
+        case "--prev":
+            if not args:
+                print("enter a command")
+                return NO_INPUT
+            
+            shorthand : str = args.pop(0)
+            do_prev(shorthand, mapping)
+            return 0
     
-    event : Event = mapping.get(command)
+    event : None | Event = mapping.get(command)
     if event is None:
         print(f"invalid command - '{command}'")
-        sys.exit(NO_COMMAND)
+        return NO_COMMAND
     
     event.dump(args)
+    return 0
 
 def create_events():
     no_arg : list[Event] = [ BedLights(), Shave() ]
@@ -42,12 +52,18 @@ def create_events():
     return no_arg + one_arg
 
 def display_help(events : list[Event]):
-    print(f"usage : {basename(sys.argv[0])} [ -[p]rev command ]")
+    display_usage()
     print()
-    print("these things can be logged")
+    print("events can be logged using the following shorthands:")
     print("\n".join(
         f"    {event.get_usage()}" for event in events
     ))
 
+def display_usage():
+    print(f"usage : {basename(sys.argv[0])} [ --prev shorthand ]")
+
+def do_prev(shorthand : str, mapping : dict[str, Event]):
+    pass
+
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
