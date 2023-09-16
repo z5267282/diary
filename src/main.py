@@ -1,3 +1,4 @@
+import json
 from os.path import basename
 import sys
 
@@ -35,8 +36,7 @@ def main():
                 return NO_INPUT
             
             shorthand : str = args.pop(0)
-            do_prev(shorthand, mapping)
-            return 0
+            return do_prev(shorthand, mapping)
     
     event : None | Event = mapping.get(command)
     if event is None:
@@ -63,7 +63,19 @@ def display_usage():
     print(f"usage : {basename(sys.argv[0])} [ --prev shorthand ]")
 
 def do_prev(shorthand : str, mapping : dict[str, Event]):
-    pass
+    event : None | Event = mapping.get(shorthand)
+    if event is None:
+        print(f"invalid shorthand - '{shorthand}'")
+        return NO_COMMAND
+
+    with open(event.get_filename(), "r") as f:
+        data = json.load(f)
+    
+    if not data:
+        print(f"there were no entries for {event.name}")
+        return 0
+    
+    # oldest : 
 
 if __name__ == "__main__":
     sys.exit(main())
