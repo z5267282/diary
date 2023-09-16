@@ -25,10 +25,7 @@ def main():
     
     command : str = args.pop(0)
     if command == "--help":
-        print("these things can be logged")
-        print("\n".join(
-            f"    {event.get_usage()}" for event in events
-        ))
+        display_help()
         sys.exit(0)
 
     event : Event = mapping.get(command)
@@ -42,6 +39,12 @@ def create_events():
     no_arg : list[Event] = [ BedLights(), Shave() ]
     one_arg : list[Event] = [ HairCut(), Note(), Ping() ]
     return no_arg + one_arg
+
+def display_help(events : list[Event]):
+    print("these things can be logged")
+    print("\n".join(
+        f"    {event.get_usage()}" for event in events
+    ))
 
 if __name__ == "__main__":
     main()
