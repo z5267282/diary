@@ -19,3 +19,6 @@ class OneArg(Event):
     
     def append(self, old : list, entry : dict) -> None:
         old.append(entry)
+    
+    def prev(self, old : list) -> str:
+        return old.k

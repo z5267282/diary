@@ -4,11 +4,11 @@ import json
 import os
 import sys
 
-from config import DATE_FORMAT
+from config import DATE_FORMAT, LOGS
 from error import BAD_ARGS
 
 class Event(ABC):
-    LOGS : str = os.path.expanduser("~/OneDrive - UNSW/diary")
+    DATE_KEY : str = "date"
 
     @abstractmethod
     def __init__(self, name : str, num_args : int, usage : str):
@@ -58,7 +58,7 @@ class Event(ABC):
                 "" if self.num_args == 1 else "s"
             ))
         today = datetime.now().strftime(DATE_FORMAT)
-        return { "date" : today }
+        return { Event.DATE_KEY : today }
     
     @abstractmethod
     def append(self, old : list, entry : dict) -> None:
@@ -72,7 +72,7 @@ class Event(ABC):
     def get_filename(self) -> str:
         """Filenames should be hyphenated version with .json as a suffix"""
         js = "{}.json".format(self.name.replace(" ", "-"))
-        return os.path.join(Event.LOGS, js)
+        return os.path.join(LOGS, js)
     
     def get_usage(self) -> str:
         return f"{self.get_shorthand()} : {self.name} {self.usage}"
