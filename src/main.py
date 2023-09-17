@@ -28,17 +28,9 @@ def main() -> int:
         return code
     
     command : str = args.pop(0)
-    match command:
-        case "--help":
-            display_help(events)
-            return 0
-        case "--prev":
-            bad, code = handle_bad_args(args)
-            if bad:
-                return code
-            
-            shorthand : str = args.pop(0)
-            return do_prev(shorthand, mapping)
+    code    : int | None = handle_options(command, events, args, mapping)
+    if code is not None:
+        return code
     
     event, code = find_event(command, mapping)
     if code:
@@ -60,6 +52,25 @@ def handle_bad_args(args : list[str]) -> tuple[bool, int]:
         return True, NO_INPUT
     
     return False, 0
+
+def handle_options(
+    command : str, events : list[Event], args : list[str],
+    mapping : dict[str, Event]
+) -> int | None:
+    """Return an exit code if an option was handled or None if not"""
+    match command:
+        case "--help":
+            display_help(events)
+            return 0
+        case "--prev":
+            bad, code = handle_bad_args(args)
+            if bad:
+                return code
+            
+            shorthand : str = args.pop(0)
+            return do_prev(shorthand, mapping)
+    
+    return None
 
 def display_help(events : list[Event]) -> None:
     display_usage()
