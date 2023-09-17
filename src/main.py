@@ -111,7 +111,9 @@ def find_event(
     command : str, mapping : dict[str, Event]
 ) -> tuple[Event | None, int]:
     """Find the event given a command string if it exists.
-    Return a tuple of optional event, and error code if not found"""
+    Return a tuple of optional event, and error code if not found.
+    We cannot return a lone optional event, since an error code may be
+    required."""
     event : Event | None = mapping.get(command)
     if event is None:
         print(f"invalid command - '{command}'")
@@ -121,3 +123,4 @@ def find_event(
 
 if __name__ == "__main__":
     sys.exit(main())
+
