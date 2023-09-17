@@ -1,7 +1,9 @@
+import datetime as dt
 import json
 from os.path import basename
 import sys
 
+from config import DATE_FORMAT
 from error import NO_INPUT, NO_COMMAND
 
 from events.abstract.event import Event
@@ -60,22 +62,32 @@ def display_help(events : list[Event]):
     ))
 
 def display_usage():
-    print(f"usage : {basename(sys.argv[0])} [ --prev shorthand ]")
+    options : str = "[ --help ] | [ --prev shorthand ]"
+    print(
+        "usage : {} <shorthand> [ details ] | {}".format(
+            basename(sys.argv[0]), options
+        )
+    )
 
-def do_prev(shorthand : str, mapping : dict[str, Event]):
+def do_prev(shorthand : str, mapping : dict[str, Event]) -> int:
     event : None | Event = mapping.get(shorthand)
     if event is None:
         print(f"invalid shorthand - '{shorthand}'")
         return NO_COMMAND
 
     with open(event.get_filename(), "r") as f:
-        entries = json.load(f)
+        entries : list[dict] = json.load(f)
     
     if not entries:
         print(f"there were no entries for {event.name}")
         return 0
     
-
+    last      : str = event.prev(entries)
+    last_time : dt.date = dt.datetime.strptime(last, DATE_FORMAT).date()
+    today     : dt.date = dt.date.today()
+    diff      : dt.timedelta = today - last_time
+    print(f"it has been {diff.days} days since the last change to {shorthand}")
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())
