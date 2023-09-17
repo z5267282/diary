@@ -69,7 +69,7 @@ class Event(ABC):
     
     def get_filename(self) -> str:
         """Filenames should be hyphenated version with .json as a suffix"""
-        js = "{}.json".format(self.name.replace(" ", "-"))
+        js : str = "{}.json".format(self.name.replace(" ", "-"))
         return os.path.join(LOGS, js)
     
     def get_usage(self) -> str:

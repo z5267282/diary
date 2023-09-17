@@ -69,13 +69,13 @@ def do_prev(shorthand : str, mapping : dict[str, Event]):
         return NO_COMMAND
 
     with open(event.get_filename(), "r") as f:
-        data = json.load(f)
+        entries = json.load(f)
     
-    if not data:
+    if not entries:
         print(f"there were no entries for {event.name}")
         return 0
     
-    # oldest : 
+
 
 if __name__ == "__main__":
     sys.exit(main())
