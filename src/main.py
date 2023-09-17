@@ -22,7 +22,7 @@ def main() -> int:
         event.get_shorthand() : event for event in events
     }
 
-    args = sys.argv[1:]
+    args : list[str] = sys.argv[1:]
     bad, code = handle_bad_args(args)
     if bad:
         return code
