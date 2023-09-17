@@ -23,8 +23,8 @@ def main() -> int:
     }
 
     args : list[str] = sys.argv[1:]
-    bad, code = handle_bad_args(args)
-    if bad:
+    code : int | None = handle_bad_args(args)
+    if code is not None:
         return code
     
     command : str = args.pop(0)
@@ -44,14 +44,14 @@ def create_events() -> list[Event]:
     one_arg : list[Event] = [ HairCut(), Note(), Ping() ]
     return no_arg + one_arg
 
-def handle_bad_args(args : list[str]) -> tuple[bool, int]:
+def handle_bad_args(args : list[str]) -> int | None:
     """Verify there are command line arguments remaining.
-    Return a tuple of boolean indicating bad arguments and an error code."""
+    Return a code as an int if an error occurred, otherwise None"""
     if not args:
         print("enter a command")
-        return True, NO_INPUT
+        return NO_INPUT
     
-    return False, 0
+    return None
 
 def handle_options(
     command : str, events : list[Event], args : list[str],
@@ -63,8 +63,8 @@ def handle_options(
             display_help(events)
             return 0
         case "--prev":
-            bad, code = handle_bad_args(args)
-            if bad:
+            code : int | None = handle_bad_args(args)
+            if code is not None:
                 return code
             
             shorthand : str = args.pop(0)
@@ -104,7 +104,7 @@ def do_prev(shorthand : str, mapping : dict[str, Event]) -> int:
     last_time : dt.date = dt.datetime.strptime(last, DATE_FORMAT).date()
     today     : dt.date = dt.date.today()
     diff      : dt.timedelta = today - last_time
-    print(f"it has been {diff.days} days since the last change to {shorthand}")
+    print(f"it has been {diff.days} days since the last change to {event.name}")
     return 0
 
 def find_event(
