@@ -16,7 +16,7 @@ from events.concrete.haircut import HairCut
 from events.concrete.note import Note
 from events.concrete.ping import Ping
 
-def main():
+def main() -> int:
     events : list[Event] = create_events()
     mapping : dict[str, Event] = {
         event.get_shorthand() : event for event in events
@@ -48,12 +48,12 @@ def main():
     event.dump(args)
     return 0
 
-def create_events():
+def create_events() -> list[Event]:
     no_arg : list[Event] = [ BedLights(), Shave() ]
     one_arg : list[Event] = [ HairCut(), Note(), Ping() ]
     return no_arg + one_arg
 
-def display_help(events : list[Event]):
+def display_help(events : list[Event]) -> None:
     display_usage()
     print()
     print("events can be logged using the following shorthands:")
@@ -61,7 +61,7 @@ def display_help(events : list[Event]):
         f"    {event.get_usage()}" for event in events
     ))
 
-def display_usage():
+def display_usage() -> None:
     options : str = "[ --help ] | [ --prev shorthand ]"
     print(
         "usage : {} <shorthand> [ details ] | {}".format(
