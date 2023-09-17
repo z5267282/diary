@@ -12,5 +12,8 @@ class NoArg(Event):
         """No arg events should only store their date"""
         old.append(entry["date"])
     
+    def prev(self, old : list) -> str:
+        return old[-1]
+    
     def parse(self, tokens : list[str]) -> dict:
         return super().parse(tokens)
