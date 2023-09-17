@@ -64,10 +64,8 @@ class Event(ABC):
     def append(self, old : list, entry : dict) -> None:
         pass
 
-    @abstractmethod
-    def prev(self, old : list) -> str:
-        """Return the date of the most recent entry as a string"""
-        pass
+    def prev(self, entries : list[dict]) -> str:
+        return entries[-1][Event.DATE_KEY]
     
     def get_filename(self) -> str:
         """Filenames should be hyphenated version with .json as a suffix"""

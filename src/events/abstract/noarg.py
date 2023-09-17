@@ -14,7 +14,3 @@ class NoArg(Event):
     def append(self, old: list, entry: dict) -> None:
         """No arg events should only store their date"""
         old.append(entry["date"])
-    
-    def prev(self, old : list) -> str:
-        return old[-1]
-    
