@@ -107,7 +107,7 @@ def do_prev(shorthand : str, mapping : dict[str, Event]) -> int:
     plural    : str = "" if diff.days == 1 else "s"
     print(
         "it has been {} day{} since the last change to {}".format(
-            plural, diff.days, event.name
+            diff.days, plural, event.name
         )
     )
     return 0
