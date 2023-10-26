@@ -40,7 +40,7 @@ def main() -> int:
     return 0
 
 def create_events() -> list[Event]:
-    no_arg : list[Event] = [ BedLights(), Shave() ]
+    no_arg  : list[Event] = [ BedLights(), Shave() ]
     one_arg : list[Event] = [ HairCut(), Note(), Ping() ]
     return no_arg + one_arg
 
@@ -123,4 +123,3 @@ def find_event(
 
 if __name__ == "__main__":
     sys.exit(main())
-
