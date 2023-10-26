@@ -104,7 +104,12 @@ def do_prev(shorthand : str, mapping : dict[str, Event]) -> int:
     last_time : dt.date = dt.datetime.strptime(last, DATE_FORMAT).date()
     today     : dt.date = dt.date.today()
     diff      : dt.timedelta = today - last_time
-    print(f"it has been {diff.days} days since the last change to {event.name}")
+    plural    : str = "" if diff.days == 1 else "s"
+    print(
+        "it has been {} day{} since the last change to {}".format(
+            plural, diff.days, event.name
+        )
+    )
     return 0
 
 def find_event(
